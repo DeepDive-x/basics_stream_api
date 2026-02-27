@@ -4,6 +4,8 @@ import java.util.stream.*;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 import java.util.Optional;
+import java.util.Map;
+import java.util.LinkedHashMap;
 import java.util.List;
 class Application2
 {
@@ -50,10 +52,14 @@ class Application2
 				
 				List<Employee> sortedEmps = Emp.stream()
                                      .sorted(Comparator.comparing(Employee::grtSal))
-									 .peek(x -> System.out.println(x.getName()))
                                      .collect(Collectors.toList());
-			  // System.out.println("\nsorted list  :  "+ sortedEmps);						 
+			   System.out.println("\nsorted list  :  "+ sortedEmps);						 
 									 
+									 
+				Map<String, Double> sortedMap = Emp.stream()
+											.sorted(Comparator.comparing(Employee::grtSal))
+											.collect(Collectors.toMap(Employee::getName, Employee::grtSal,(oldValue, newValue)->oldValue, LinkedHashMap::new));
+				System.out.println("Sorted Map  = "+sortedMap);
 									 
 				List<Employee> sortedEmpsRev = Emp.stream()
                                      .sorted(Comparator.comparing(Employee::grtSal).reversed())
