@@ -35,10 +35,19 @@ class Stream_questions
 		
 		//Print out a list of all the unique department names in the company (no duplicates).
 		Set<String> departments = Emp.stream()
-								.map(Employee::getDept)
+								.map(Employee::getDept)        //.distinct().collect(Collectors.toList());
 								.collect(Collectors.toSet());
 		System.out.println("=============Departments================");						
 		departments.forEach((e) -> System.out.println(e));
+		
+		//  Calculate the total combined salary of everyone in the "HR" department.
+		double totalSalHR = Emp.stream()
+							.filter(x -> x.getDept().equals("Hr"))
+							.mapToDouble(Employee:: getsal)
+							.sum();
+							
+		System.out.println("Salary of Hr's:  "+totalSalHR);
+		
 	}
 }
 class Employee
@@ -62,6 +71,7 @@ class Employee
 	public int getYear(){return year;}
 	public String getGender(){return gender;}
 	public String getDept(){ return Department; }
+	public double getsal(){return salary;}
 	public String toString()
 	{
 		return "Name: "+name+"   empId: "+id+"    year: "+year+"    salary: "+salary;
